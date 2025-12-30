@@ -3,12 +3,7 @@
  * About Section Template Part
  */
 $heading = get_theme_mod('about_heading', 'The Woman Behind the Mic');
-$bio = get_theme_mod(
-    'about_bio',
-    '<p>Catherine Geller has been making audiences roar with laughter for over a decade. Known for her sharp wit, relatable storytelling, and fearless approach to comedy, she\'s become one of the most sought-after performers in the industry.</p>' .
-    '<p>From sold-out theater tours to Netflix specials, Catherine brings her unique perspective on life, relationships, and the absurdity of everyday existence to stages around the world.</p>' .
-    '<p>When she\'s not on stage, you can find her writing new material, hosting her hit podcast, or spending time with her rescue dogs.</p>'
-);
+$bio = get_theme_mod('about_bio', '<p>Catherine Geller has been making audiences roar with laughter for over a decade.</p>');
 $image = get_theme_mod('about_image', '');
 $stat1_val = get_theme_mod('about_stat_1_value', '10+');
 $stat1_label = get_theme_mod('about_stat_1_label', 'Years');

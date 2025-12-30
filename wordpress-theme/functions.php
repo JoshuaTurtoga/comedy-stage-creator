@@ -88,44 +88,38 @@ require_once get_template_directory() . '/inc/custom-post-types.php';
 /**
  * Custom Nav Walker for smooth scrolling links
  */
-class Catherine_Geller_Link_Walker extends Walker_Nav_Menu {
-    /** @var string */
-    private $link_class;
-
-    public function __construct($link_class = '') {
-        $this->link_class = $link_class;
-    }
-
-    // Prevent <ul> wrappers
-    public function start_lvl(&$output, $depth = 0, $args = null) {}
-    public function end_lvl(&$output, $depth = 0, $args = null) {}
-
-    // Output plain <a> links (no <li>) to match the original React navbar
+class Catherine_Geller_Nav_Walker extends Walker_Nav_Menu {
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args, $depth));
+        
+        $output .= '<li class="' . esc_attr($class_names) . '">';
+        
         $atts = array();
         $atts['title']  = !empty($item->attr_title) ? $item->attr_title : '';
         $atts['target'] = !empty($item->target) ? $item->target : '';
         $atts['rel']    = !empty($item->xfn) ? $item->xfn : '';
         $atts['href']   = !empty($item->url) ? $item->url : '';
-
-        $classes = trim($this->link_class . ' ' . (!empty($item->classes) ? implode(' ', array_filter((array) $item->classes)) : ''));
-        $atts['class'] = trim($classes);
-
+        $atts['class']  = 'nav-link nav-link-underline';
+        
         $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
-
+        
         $attributes = '';
         foreach ($atts as $attr => $value) {
-            if ($value !== '') {
+            if (!empty($value)) {
                 $value = ('href' === $attr) ? esc_url($value) : esc_attr($value);
                 $attributes .= ' ' . $attr . '="' . $value . '"';
             }
         }
-
-        $title = apply_filters('the_title', $item->title, $item->ID);
-        $output .= '<a' . $attributes . '>' . $title . '</a>';
+        
+        $item_output = $args->before;
+        $item_output .= '<a' . $attributes . '>';
+        $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
+        $item_output .= '</a>';
+        $item_output .= $args->after;
+        
+        $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
-
-    public function end_el(&$output, $item, $depth = 0, $args = null) {}
 }
 
 /**
