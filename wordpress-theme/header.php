@@ -39,7 +39,7 @@
                         'theme_location' => 'primary',
                         'container'      => false,
                         'items_wrap'     => '%3$s',
-                        'walker'         => new Catherine_Geller_Nav_Walker(),
+                        'walker'         => new Catherine_Geller_Link_Walker('nav-link nav-link-underline'),
                     ));
                 } else {
                     // Default navigation for smooth scrolling
@@ -79,8 +79,7 @@
                     'theme_location' => 'primary',
                     'container'      => false,
                     'items_wrap'     => '%3$s',
-                    'link_before'    => '',
-                    'link_after'     => '',
+                    'walker'         => new Catherine_Geller_Link_Walker('mobile-nav-link'),
                 ));
             } else {
                 ?>

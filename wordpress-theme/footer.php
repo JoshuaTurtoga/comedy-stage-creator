@@ -18,8 +18,7 @@
                         'theme_location' => 'footer',
                         'container'      => false,
                         'items_wrap'     => '%3$s',
-                        'link_before'    => '',
-                        'link_after'     => '',
+                        'walker'         => new Catherine_Geller_Link_Walker('footer-link'),
                     ));
                 } else {
                     ?>
